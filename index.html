@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>BuscaMInas</title>
 </head>
+
 <body>
     <!-- CSS (Estilos)-->
     <style>
-
-        *{
+        * {
             transition: all 1s;
             box-sizing: border-box;
         }
 
-        body{
+        body {
             font-family: calibri;
-            margin:0;
+            margin: 0;
             padding: 0;
             user-select: none;
             background: lightsteelblue;
         }
 
-        table{
+        table {
             background: slategray;
             margin: auto;
         }
 
-        td{
+        td {
             border: rgba(0, 0, 0, 0.25) 1px solid;
+            text-align: center;
+            font-size: 120%;
+            color: white;
         }
-
-
     </style>
 
     <!-- HTML (Estructura)-->
-    <table cellspacing = 0 cellpadding = 0 id="tablero">
-     
-        
+    <table cellspacing=0 cellpadding=0 id="tablero">
+
+
     </table>
 
     <!-- JS (Lógica)-->
@@ -46,13 +48,13 @@
         let columnas = 20
         let lado = 30
 
-        let minas = filas*columnas*0.15;
+        let minas = filas * columnas * 0.15;
 
         let tablero = []
 
         nuevoJuego()
 
-        function nuevoJuego(){
+        function nuevoJuego() {
             generarTableroHTML()
             generarTableroJuego()
             refrescarTablero()
@@ -60,70 +62,124 @@
 
         function generarTableroHTML() {
             let html = ""
-            for(let f = 0; f < filas; f++){
-                html += '<tr>'
-                for(let c = 0; c < columnas; c++){
-                    html += '<td style "width:$(lado)px;height:$(lado)px">'
+            for (let f = 0; f < filas; f++) {
+                html += '<tr>';
+                for (let c = 0; c < columnas; c++) {
+                    // Utilizamos comillas inversas para permitir la interpolación de cadenas
+                    html += `<td id="celda-${c}-${f}" style="width:${lado}px;height:${lado}px">`;
+                    //html += `${c}-${f}`
                     html += '</td>'
-
+                }
+                html += '</tr>'
             }
-            html += '</tr>'
-        }
-        let tableroHTML = document.getElementById("tablero")
-        tableroHTML.innerHTML = html
-        tableroHTML.style.width = columnas*lado+"px"
-        tableroHTML.style.height = filas*lado+"px"
+
+
+
+
+            let tableroHTML = document.getElementById("tablero")
+            tableroHTML.innerHTML = html
+            tableroHTML.style.width = columnas * lado + "px"
+            tableroHTML.style.height = filas * lado + "px"
         }
 
-        function refrescarTablero() {
+        function eventosNuevos(params){
+            for(let f = 0; f < filas; f++){
+                for(let c = 0; c < columnas; c++){
+                    let celda = document.getElementById(`celda-${c}-${f}`)
+                    celda.addEventListener("dbclick", me=> {
+                    })
+
+                    
+
+                    celda.addEventListener("mouseup", me=> {
+                    })
+
+                    
+
+                }
+            }
+
+        }
+        
+        function dobleClick(celda,c,f,me){
             
         }
+        function refrescarTablero() {
+            for (let f = 0; f < filas; f++) {
+                for (let c = 0; c < columnas; c++) {
 
-        function generarTableroJuego(params){
+                    let celda = document.getElementById(`celda-${c}-${f}`)
+                    //Si hay mina B
+                    // 3 estados de minas: descubierto,marcada,cubierta 
+                    if (tablreo[c][f].estado == "descubierto") {
+                        switch (tablero[c][f].valor) {
+                            case -1:
+                                celda.innerHTML = "B";
+
+                                break;
+
+                            case 0:
+                                break
+
+
+                            default:
+                                celda.innerHTML = "B";
+                                break;
+                        }
+
+
+                    }
+
+                }
+            }
+
+        }
+
+        function generarTableroJuego(params) {
             vaciarTablero()//vaciar tablero, no interferencias
             ponerMinas()//Poner minas, -1
             contadoresMinas()//Poner contadoresd de minas
 
-            function vaciarTablero(){
+            function vaciarTablero() {
                 tablero = []
-                for(let c = 0; c<columnas; c++){
+                for (let c = 0; c < columnas; c++) {
                     tablero.push([])
                 }
 
             }
 
-            function ponerMinas(){
-                for(let i = 0; i < minas; i++){
+            function ponerMinas() {
+                for (let i = 0; i < minas; i++) {
                     let c
                     let f
                     do {
 
-                        c = Math.floor(Math.random()*columnas)
-                        f = Math.floor(Math.random()*filas)
-                        
+                        c = Math.floor(Math.random() * columnas)
+                        f = Math.floor(Math.random() * filas)
+
                     } while (tablero[c][f]); //Verifica que no haya mina en esa pos
-                    tablero[c][f] = {valor: -1}
+                    tablero[c][f] = { valor: -1 }
 
                 }
 
             }
 
-            function contadoresMinas(){
-                for(let f = 0; f < filas; f++){
-                    for(let c = 0; c < columnas; c++){
-                        if(!tablero[c][f]){
-                            tablero[c][f] = {valor: 0}
+            function contadoresMinas() {
+                for (let f = 0; f < filas; f++) {
+                    for (let c = 0; c < columnas; c++) {
+                        if (!tablero[c][f]) {
+                            tablero[c][f] = { valor: 0 }
                         }
-                    
+
 
                     }
 
 
                 }
 
-        }
+            }
 
-    }
+        }
 
 
 
@@ -132,4 +188,5 @@
 
 
 </body>
+
 </html>
