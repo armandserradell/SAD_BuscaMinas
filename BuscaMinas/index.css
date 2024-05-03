@@ -1,5 +1,5 @@
 *{
-    transition: all 1s;
+    transition: all 0.5s;
     box-sizing: border-box;
 }
 
@@ -8,14 +8,15 @@ body{
     margin: 0;
     padding: 0;
     user-select: none;
-    background: rgb(224, 228, 230);
+    background: rgb(187, 241, 246);
 
 }
 
 table{
     
-    background-color: rgb(167, 189, 212);
+    background-color: white;
     margin: 0 auto;
+    margin-top: 120px;
     
 }
 
@@ -24,8 +25,20 @@ td{
     text-align: center;
     font-size: 100%;
     color: white;
-    box-shadow: inset 3px 3px 0 0 rgba(3, 196, 249, 0.5),
-    inset -3px -3px 0 0 rgba(204, 14, 166, 0.5);
+
+    background-color: white;
+    background-image: url(img/hierba.avif);
+    background-size: cover;
+    /*box-shadow: inset 3px 3px 0 0 rgba(255, 255, 255, 0.5),
+    inset -3px -3px 0 0 rgba(0, 0, 0, 0.5);*/
     
+}
+
+
+.tierra{
+    background-color: white;
+    background-image: url(img/suelo.avif);
+    background-size: cover;
+
 }
 
