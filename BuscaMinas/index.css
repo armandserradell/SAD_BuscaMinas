@@ -8,17 +8,40 @@ body{
     margin: 0;
     padding: 0;
     user-select: none;
-    background: rgb(187, 241, 246);
+    background-image: url(/img/hierba.avif);
+    background-size: cover;
+    
+    
 
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/img/hierba.avif');
+    background-size: cover;
+    filter: grayscale(45%);
+    z-index: -1; /* Desaturación del 70% */
 }
 
 table{
     
     background-color: white;
     margin: 0 auto;
-    margin-top: 120px;
+    margin-top: 20px;
+    border: rgba(0, 0, 0, 0.95) solid 1.5px;
+    box-shadow: 5px 5px 10px 0px rgb(2, 96, 24);
+    
     
 }
+  
+
+    
+
 
 td{
     border: rgba(0, 0, 0, 0.25) solid 1px;
@@ -36,9 +59,55 @@ td{
 
 
 .tierra{
-    background-color: white;
+    /*background-color: white;*/
     background-image: url(img/suelo.avif);
     background-size: cover;
 
 }
+
+.panel{
+    
+    margin: 0 auto;
+    background: none;
+    width: 80px;
+    height: 80px;
+   /* border: 1px solid darkgrey;
+    border-radius: 25px;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+}
+
+#pista{
+    
+    background-color: rgb(255,0,0);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0px 6px 0px 0px rgb(156,0,0);
+    font-size: 10px;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 3px solid rgb(250,80,80);
+
+}
+
+#pista:hover {
+    background-color: rgb(250,80,80);
+
+}
+
+#pista:active{
+    transform: translateY(6px);
+    background-color: rgb(156,0,0);
+    box-shadow: none;
+    border: none;
+}
+
+
+
 
