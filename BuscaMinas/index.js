@@ -260,6 +260,7 @@ function verificarGanador(){
 
     let ganador = document.getElementById("ganador")
     ganador.style.display = "block"
+    ganador.style.display = "flex"
     setTimeout(function() {
         ganador.style.display = "none";
     }, 2500); // ms
