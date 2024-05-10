@@ -4,7 +4,7 @@ let lado = 40
 
 let marcas = 0
 
-let minas = columnas * filas * 0.1
+let minas =  Math.floor(columnas * filas * 0.1)
 
 let tablero = []
 let enJuego = true
@@ -12,15 +12,81 @@ let juegoIniciado = false
 
 let pista = true
 
+let sonidoStart = new Audio("sonidos/start.mp3")
+let sonidoAbrir = new Audio("sonidos/dig.mp3")
+let sonidoBomba = new Audio("sonidos/bomba.mp3")
+let sonidoPista = new Audio("sonidos/pista.mp3")
+let sonidoWin = new Audio("sonidos/victoria.mp3")
+let sonidoMarcar = new Audio("sonidos/marcar.mp3")
+
 nuevoJuego()
 
 function nuevoJuego() {
+    console.log("Iniciando nuevo juego con las siguientes configuraciones:");
+    console.log("Filas:", filas);
+    console.log("Columnas:", columnas);
+    console.log("Minas:", minas);
+
+
+    sonidoStart.play()
     generarTableroHTML()
+    reiniciarVariables()
     añadirEventos()
     generarTableroJuego()
     refrescarTablero()
 
 }
+
+function actualizarPanel(){
+    let panel = document.getElementById("minas");
+    panel.innerHTML = minas - marcas;
+}
+
+
+function reiniciarVariables(){
+    marcas = 0;
+    enJuego = true;
+    juegoIniciado = false;
+
+}
+
+function mostrarMenuConfiguracion() {
+    let menuConfiguracion = document.getElementById("menu-configuracion");
+    if (menuConfiguracion.style.display === "none") {
+        menuConfiguracion.style.display = "block";
+    } else {
+        menuConfiguracion.style.display = "none";
+    }
+}
+
+function cerrarMenuConfiguracion() {
+    document.getElementById("menu-configuracion").style.display = "none";
+}
+
+function aplicarConfiguracion() {
+    let nuevasFilas = parseInt(document.getElementById("input-filas").value);
+    let nuevasColumnas = parseInt(document.getElementById("input-columnas").value);
+    let nuevasMinas = parseInt(document.getElementById("input-minas").value);
+
+    if (isNaN(nuevasFilas) || isNaN(nuevasColumnas) || isNaN(nuevasMinas)) {
+        alert("Por favor, introduce valores numéricos válidos para filas, columnas y minas.");
+        return;
+    }
+
+    // Actualizar variables con los nuevos valores
+    filas = nuevasFilas;
+    columnas = nuevasColumnas;
+    minas = nuevasMinas;
+
+    console.log("Nuevas filas:", filas);
+    console.log("Nuevas columnas:", columnas);
+    console.log("Nuevas minas:", minas);
+
+
+    // Reiniciar el juego con las nuevas configuraciones
+    nuevoJuego();
+}
+
 function generarTableroHTML() {
     let html = ""
     for (let f = 0; f < filas; f++) {
@@ -90,6 +156,13 @@ function clicSimple(celda, c, f, me) {
                 break;
             }
             tablero[c][f].estado = "descubierto"
+            if(tablero[c][f].valor != -1 ){
+                sonidoAbrir.currentTime = 0
+                sonidoAbrir.play()
+                setTimeout(function() {
+                    sonidoAbrir.pause();
+                }, 2000);
+            }
             juegoIniciado = true
 
             if(tablero[c][f].valor == 0){
@@ -103,6 +176,7 @@ function clicSimple(celda, c, f, me) {
                 marcas--
 
             } else {
+                sonidoMarcar.play()
                 tablero[c][f].estado = "marcado"
                 marcas++
             }
@@ -161,6 +235,7 @@ function refrescarTablero() { //Estado visual tablero
     }
     verificarGanador()
     verificarPerdedor()
+    actualizarPanel()
 } 
 
 function generarTableroJuego() {
@@ -259,6 +334,8 @@ function verificarGanador(){
       }
 
     let ganador = document.getElementById("ganador")
+    sonidoAbrir.pause()
+    sonidoWin.play()
     ganador.style.display = "block"
     ganador.style.display = "flex"
     setTimeout(function() {
@@ -273,11 +350,13 @@ function verificarPerdedor(){
     for (let f = 0; f < filas; f++) {
         for (let c = 0; c < columnas; c++) {
             if(tablero[c][f].valor == -1 && tablero[c][f].estado == "descubierto"){
+                sonidoBomba.play()
                 let explosion = document.getElementById("explosion")
                 explosion.style.display = "block"
                 setTimeout(function() {
                     explosion.style.display = "none";
                 }, 2500); // ms
+
                 enJuego = false
 
             }
@@ -320,6 +399,11 @@ function darPista(){
     
     let[c, f] = posicionAleatoria
     let celda = document.getElementById(`celda-${c}-${f}`)
+    sonidoPista.currentTime = 0
+    sonidoPista.play()
+    setTimeout(function() {
+        sonidoPista.pause();
+    }, 2000);
     celda.style.background = "red"
 
     pista = false
