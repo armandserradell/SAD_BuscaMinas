@@ -13,9 +13,28 @@
         <button id="pista" onclick="darPista()"> PISTA! </button> 
 
     </div>
-        <table cellspacing="0" cellspadding="0" id="tablero" >
-      
-        </table>
+    <div class="container">
+        <table cellspacing="0" cellspadding="0" id="tablero"></table>
+
+        <div id="menu-minas">
+            <button style = "font-size: 15px; background-color: red; color:white; width: 60px ; height: 60px;" onclick="nuevoJuego()">Juego nuevo</button>
+            <span id="minas">00</span>
+            <button onclick= "mostrarMenuConfiguracion()" style ="font-size: 35px;">&#128295</button>
+        </div>
+    </div>
+
+    <div id="menu-configuracion">
+        <form>
+            <label for="input-filas">Filas:</label>
+            <input type="number" id="input-filas" min="1" max="20">
+            <label for="input-columnas">Columnas:</label>
+            <input type="number" id="input-columnas" min="1" max="20">
+            <label for="input-minas">Minas:</label>
+            <input type="number" id="input-minas" min="1" max="100">
+            <button onclick="aplicarConfiguracion()">Aplicar</button>
+            <button type="button" onclick="cerrarMenuConfiguracion()">Cancelar</button>
+        </form>
+    </div>
             <div id="explosion" style="display: none;">
                 <img src="img/explosion.webp" style="width: 100vw; height: 100vh; object-fit: cover; position: fixed; top: 0; left: 0; z-index: 9999;">
             </div>
