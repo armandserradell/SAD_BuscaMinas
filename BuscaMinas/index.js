@@ -47,6 +47,7 @@ function reiniciarVariables(){
     marcas = 0;
     enJuego = true;
     juegoIniciado = false;
+    pista = true;
 
 }
 
